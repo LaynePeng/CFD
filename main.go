@@ -50,7 +50,7 @@ func main() {
 	app := cli.NewApp()
 	app.EnableBashCompletion = true
 	app.Name = "Composable Function Discover"
-	app.Usage = "A toolkit for discover hardware functons in system"
+	app.Usage = "A toolkit for discovering hardware functons in system"
 
 	app.Commands = []cli.Command{
 		{
@@ -78,7 +78,7 @@ func main() {
 			Usage:   "Test if a hardware function supported",
 			Action: func(c *cli.Context) error {
 				isSupport, _ := testFunctionSupported(c.String("function"))
-				fmt.Println("Test: ", isSupport)
+				fmt.Println(isSupport)
 				return nil
 			},
 			Flags: []cli.Flag{
