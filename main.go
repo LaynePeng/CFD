@@ -49,6 +49,7 @@ func testFunctionSupported(name string) (bool, error) {
 func main() {
 	app := cli.NewApp()
 	app.EnableBashCompletion = true
+	app.Version = "v1.0.0"
 	app.Name = "Composable Function Discover"
 	app.Usage = "A toolkit for discovering hardware functons in system"
 
