@@ -25,7 +25,9 @@ func (gs *GpuSensorCentOS7) Desc() (string, error) {
 }
 
 func (gs *GpuSensorCentOS7) Detail() (string, error) {
-	return "", nil
+	ret := RunCmd("/usr/sbin/lspci | grep -i nvidia")
+
+	return ret, nil
 }
 
 func (ns *NVRAMSensorCentOS7) IsSupported() (bool, error) {
@@ -39,7 +41,9 @@ func (ns *NVRAMSensorCentOS7) Desc() (string, error) {
 }
 
 func (ns *NVRAMSensorCentOS7) Detail() (string, error) {
-	return "", nil
+	ret := RunCmd("lsblk")
+
+	return ReturnAndFoundLineByLine("^nvme.*\\s*\\d*:\\d*\\s*\\d*\\s.*", ret), nil
 }
 
 func (qs *QATSensorCentOS7) IsSupported() (bool, error) {

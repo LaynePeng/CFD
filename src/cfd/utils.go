@@ -40,3 +40,17 @@ func ParseAndFoundLineByLine(reg string, cmd_return string) bool {
 
 	return false
 }
+
+func ReturnAndFoundLineByLine(reg string, cmd_return string) string {
+	lines := strings.Split(cmd_return, "\n")
+
+	for _, line := range lines {
+		match, _ := regexp.MatchString(reg, line)
+
+		if match {
+			return line
+		}
+	}
+
+	return ""
+}
