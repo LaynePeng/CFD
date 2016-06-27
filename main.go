@@ -32,13 +32,13 @@ func testFunctionSupported(name string) (bool, error) {
 	var sensor cfd.Sensor
 	switch name {
 	case "gpu":
-		sensor = &cfd.GpuSensor{}
+		sensor = cfd.NewGpuSensor()
 	case "nvram":
-		sensor = &cfd.NVRAMSensor{}
+		sensor = cfd.NewNVRAMSensor()
 	case "qat":
-		sensor = &cfd.QATSensor{}
+		sensor = cfd.NewQATSensor()
 	case "nic_bandwidth":
-		sensor = &cfd.NICBandwidthSensor{}
+		sensor = cfd.NewNICBandwidthSensor()
 	default:
 		return false, errors.New("Not a valid function!")
 	}

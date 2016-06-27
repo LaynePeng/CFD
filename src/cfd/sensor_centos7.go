@@ -2,66 +2,66 @@ package cfd
 
 import ()
 
-type GpuSensor struct {
+type GpuSensorCentOS7 struct {
 }
 
-type NVRAMSensor struct {
+type NVRAMSensorCentOS7 struct {
 }
 
-type QATSensor struct {
+type QATSensorCentOS7 struct {
 }
 
-type NICBandwidthSensor struct {
+type NICBandwidthSensorCentOS7 struct {
 }
 
-func (gs *GpuSensor) IsSupported() (bool, error) {
+func (gs *GpuSensorCentOS7) IsSupported() (bool, error) {
 	ret := RunCmd("/usr/sbin/lspci | grep -i nvidia")
 
 	return ret != "", nil
 }
 
-func (gs *GpuSensor) Desc() (string, error) {
+func (gs *GpuSensorCentOS7) Desc() (string, error) {
 	return "", nil
 }
 
-func (gs *GpuSensor) Detail() (string, error) {
+func (gs *GpuSensorCentOS7) Detail() (string, error) {
 	return "", nil
 }
 
-func (ns *NVRAMSensor) IsSupported() (bool, error) {
+func (ns *NVRAMSensorCentOS7) IsSupported() (bool, error) {
 	ret := RunCmd("lsblk")
 
 	return ParseAndFoundLineByLine("^nvme.*\\s*\\d*:\\d*\\s*\\d*\\s.*", ret), nil
 }
 
-func (ns *NVRAMSensor) Desc() (string, error) {
+func (ns *NVRAMSensorCentOS7) Desc() (string, error) {
 	return "", nil
 }
 
-func (ns *NVRAMSensor) Detail() (string, error) {
+func (ns *NVRAMSensorCentOS7) Detail() (string, error) {
 	return "", nil
 }
 
-func (qs *QATSensor) IsSupported() (bool, error) {
+func (qs *QATSensorCentOS7) IsSupported() (bool, error) {
 	return false, nil
 }
 
-func (qs *QATSensor) Desc() (string, error) {
+func (qs *QATSensorCentOS7) Desc() (string, error) {
 	return "", nil
 }
 
-func (qs *QATSensor) Detail() (string, error) {
+func (qs *QATSensorCentOS7) Detail() (string, error) {
 	return "", nil
 }
 
-func (gs *NICBandwidthSensor) IsSupported() (bool, error) {
+func (gs *NICBandwidthSensorCentOS7) IsSupported() (bool, error) {
 	return true, nil
 }
 
-func (gs *NICBandwidthSensor) Desc() (string, error) {
+func (gs *NICBandwidthSensorCentOS7) Desc() (string, error) {
 	return "", nil
 }
 
-func (gs *NICBandwidthSensor) Detail() (string, error) {
+func (gs *NICBandwidthSensorCentOS7) Detail() (string, error) {
 	return "", nil
 }
