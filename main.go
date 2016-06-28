@@ -24,8 +24,22 @@ func listAllSupports() ([]string, error) {
 	return supports, nil
 }
 
-func showFunctionDetail() (string, error) {
-	return "", nil
+func showFunctionDetail(name string) (string, error) {
+	var sensor cfd.Sensor
+	switch name {
+	case "gpu":
+		sensor = cfd.NewGpuSensor()
+	case "nvram":
+		sensor = cfd.NewNVRAMSensor()
+	case "qat":
+		sensor = cfd.NewQATSensor()
+	case "nic_bandwidth":
+		sensor = cfd.NewNICBandwidthSensor()
+	default:
+		return "", errors.New("Not a valid function!")
+	}
+
+	return sensor.Detail()
 }
 
 func testFunctionSupported(name string) (bool, error) {
@@ -69,8 +83,15 @@ func main() {
 			Aliases: []string{"s"},
 			Usage:   "Show the detal of one hardware function",
 			Action: func(c *cli.Context) error {
-				fmt.Println("Show")
+				detail, _ := showFunctionDetail(c.String("function"))
+				fmt.Println(detail)
 				return nil
+			},
+			Flags: []cli.Flag{
+				cli.StringFlag{
+					Name:  "function, f",
+					Usage: "Specify a hardware function to show detail",
+				},
 			},
 		},
 		{

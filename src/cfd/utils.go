@@ -54,3 +54,23 @@ func ReturnAndFoundLineByLine(reg string, cmd_return string) string {
 
 	return ""
 }
+
+func ReturnSubValueOfFoundLineByLine(reg string, cmd_return string) [][]string {
+	var returnValues [][]string = nil
+	r := regexp.MustCompile(reg)
+
+	lines := strings.Split(cmd_return, "\n")
+
+	for _, line := range lines {
+		match, _ := regexp.MatchString(reg, line)
+
+		if match {
+			oneNicInfo := r.FindStringSubmatch(line)
+			if len(oneNicInfo) > 1 {
+				returnValues = append(returnValues, oneNicInfo)
+			}
+		}
+	}
+
+	return returnValues
+}
