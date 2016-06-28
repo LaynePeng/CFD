@@ -2,6 +2,8 @@ package spec
 
 import (
 	"encoding/json"
+	"fmt"
+	"log"
 )
 
 type NIC struct {
@@ -30,9 +32,25 @@ func (n *NIC) ToJson() string {
 	return string(b)
 }
 
+func (n *NIC) FromJson(nicJson string) NIC {
+	if err := json.Unmarshal([]byte(nicJson), n); err != nil {
+		log.Fatal(fmt.Sprint(err))
+	}
+
+	return *n
+}
+
 func (g *GPU) ToJson() string {
 	b, _ := json.Marshal(g)
 	return string(b)
+}
+
+func (g *GPU) FromJson(gpuJson string) GPU {
+	if err := json.Unmarshal([]byte(gpuJson), g); err != nil {
+		log.Fatal(fmt.Sprint(err))
+	}
+
+	return *g
 }
 
 func (nm *NVRAM) ToJson() string {
@@ -40,7 +58,23 @@ func (nm *NVRAM) ToJson() string {
 	return string(b)
 }
 
+func (nm *NVRAM) FromJson(nvramJson string) NVRAM {
+	if err := json.Unmarshal([]byte(nvramJson), nm); err != nil {
+		log.Fatal(fmt.Sprint(err))
+	}
+
+	return *nm
+}
+
 func (q *QAT) ToJson() string {
 	b, _ := json.Marshal(q)
 	return string(b)
+}
+
+func (q *QAT) FromJson(qatJson string) QAT {
+	if err := json.Unmarshal([]byte(qatJson), q); err != nil {
+		log.Fatal(fmt.Sprint(err))
+	}
+
+	return *q
 }
