@@ -1,8 +1,11 @@
 package cfd
 
 import (
+	"cfd/spec"
+	"encoding/json"
 	"fmt"
 	"strconv"
+	"strings"
 )
 
 type GpuSensorCentOS7 struct {
@@ -29,8 +32,25 @@ func (gs *GpuSensorCentOS7) Desc() (string, error) {
 
 func (gs *GpuSensorCentOS7) Detail() (string, error) {
 	ret := RunCmd("/usr/sbin/lspci | grep -i nvidia")
+	regexp_for_parse_gpu := ".*3D controller:\\s*(.*)\\[(.*)\\]"
+	gpuInfosRet := ReturnSubValueOfFoundLineByLine(regexp_for_parse_gpu, ret)
 
-	return ret, nil
+	var gpuInfos []*spec.GPU
+	var gpu *spec.GPU
+	for _, oneGpuInfo := range gpuInfosRet {
+		if len(oneGpuInfo) == 3 {
+			gpu = &spec.GPU{
+				Type: strings.TrimSpace(oneGpuInfo[2]),
+				Desc: strings.TrimSpace(oneGpuInfo[1]),
+			}
+
+			gpuInfos = append(gpuInfos, gpu)
+		}
+	}
+
+	b, _ := json.Marshal(gpuInfos)
+
+	return string(b), nil
 }
 
 func (ns *NVRAMSensorCentOS7) IsSupported() (bool, error) {
@@ -45,8 +65,28 @@ func (ns *NVRAMSensorCentOS7) Desc() (string, error) {
 
 func (ns *NVRAMSensorCentOS7) Detail() (string, error) {
 	ret := RunCmd("lsblk")
+	regexp_for_nvram := "^(nvme\\S*)\\s+(\\d*):(\\d*)\\s+\\d+\\s+(\\d+\\w{1})\\s+\\d+\\s+\\w+(.*)"
+	rvramInfosRet := ReturnSubValueOfFoundLineByLine(regexp_for_nvram, ret)
 
-	return ReturnAndFoundLineByLine("^nvme.*\\s*\\d*:\\d*\\s*\\d*\\s.*", ret), nil
+	var nvramInfos []*spec.NVRAM
+	var nvram *spec.NVRAM
+	for _, oneRvramInfos := range rvramInfosRet {
+		if len(oneRvramInfos) > 5 {
+			nvram = &spec.NVRAM{
+				Name:       strings.TrimSpace(oneRvramInfos[1]),
+				Major:      strings.TrimSpace(oneRvramInfos[2]),
+				Min:        strings.TrimSpace(oneRvramInfos[3]),
+				Size:       strings.TrimSpace(oneRvramInfos[4]),
+				MountPoint: strings.TrimSpace(oneRvramInfos[5]),
+			}
+
+			nvramInfos = append(nvramInfos, nvram)
+		}
+	}
+
+	b, _ := json.Marshal(nvramInfos)
+
+	return string(b), nil
 }
 
 func (qs *QATSensorCentOS7) IsSupported() (bool, error) {
