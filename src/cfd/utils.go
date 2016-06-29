@@ -17,7 +17,10 @@ func RunCmd(cmdStr string) string {
 	cmd.Stderr = &stderr
 	err := cmd.Run()
 	if err != nil {
-		if err.Error() == "exit status 1" && stderr.String() == "" {
+		if (err.Error() == "exit status 1") && stderr.String() == "" {
+			return ""
+		} else if err.Error() == "exit status 3" {
+			// Not installed the command, mostly not supported the functions
 			return ""
 		} else {
 			log.Fatal(fmt.Sprint(err) + ": " + stderr.String())

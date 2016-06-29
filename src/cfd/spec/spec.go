@@ -25,6 +25,11 @@ type NVRAM struct {
 }
 
 type QAT struct {
+	Device string `json:"device"`
+	Type   string `json:"type"`
+	NodeId string `json:"node"`
+	Engine string `json:"engine"`
+	State  string `json:"state"`
 }
 
 func (n *NIC) ToJson() string {

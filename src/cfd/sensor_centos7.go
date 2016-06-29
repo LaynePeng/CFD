@@ -90,7 +90,9 @@ func (ns *NVRAMSensorCentOS7) Detail() (string, error) {
 }
 
 func (qs *QATSensorCentOS7) IsSupported() (bool, error) {
-	return false, nil
+	ret := RunCmd("service qat_service status")
+
+	return ParseAndFoundLineByLine(".+, state=up", ret), nil
 }
 
 func (qs *QATSensorCentOS7) Desc() (string, error) {
@@ -98,7 +100,29 @@ func (qs *QATSensorCentOS7) Desc() (string, error) {
 }
 
 func (qs *QATSensorCentOS7) Detail() (string, error) {
-	return "", nil
+	ret := RunCmd("service qat_service status")
+	regexp_for_qat := "^(.+) - type=(\\S+), inst_id=0, node_id=(\\d+),  bdf=83:00:0, #accel=6, #engines=(\\d+), state=(\\w+)"
+	qatInfosRet := ReturnSubValueOfFoundLineByLine(regexp_for_qat, ret)
+
+	var qatInfos []*spec.QAT
+	var qat *spec.QAT
+	for _, oneQatInfos := range qatInfosRet {
+		if len(oneQatInfos) > 5 {
+			qat = &spec.QAT{
+				Device: strings.TrimSpace(oneQatInfos[1]),
+				Type:   strings.TrimSpace(oneQatInfos[2]),
+				NodeId: strings.TrimSpace(oneQatInfos[3]),
+				Engine: strings.TrimSpace(oneQatInfos[4]),
+				State:  strings.TrimSpace(oneQatInfos[5]),
+			}
+
+			qatInfos = append(qatInfos, qat)
+		}
+	}
+
+	b, _ := json.Marshal(qatInfos)
+
+	return string(b), nil
 }
 
 func (gs *NICBandwidthSensorCentOS7) IsSupported() (bool, error) {
