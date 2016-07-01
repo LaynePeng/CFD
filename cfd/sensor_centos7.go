@@ -1,9 +1,9 @@
 package cfd
 
 import (
-	"cfd/spec"
 	"encoding/json"
 	"fmt"
+	"github.com/LaynePeng/CFD/cfd/spec"
 	"strconv"
 	"strings"
 )

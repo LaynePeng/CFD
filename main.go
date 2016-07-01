@@ -6,7 +6,7 @@ import (
 	"os"
 	"strings"
 
-	"cfd"
+	"github.com/LaynePeng/CFD/cfd"
 	"github.com/urfave/cli"
 )
 
