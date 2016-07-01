@@ -6,22 +6,6 @@
 	],
 	"Deps": [
 		{
-			"ImportPath": "github.com/LaynePeng/cfd",
-			"Rev": "709807f33567df4e9487994b434f8d6505f03acc"
-		},
-		{
-			"ImportPath": "github.com/LaynePeng/cfd/sensor",
-			"Rev": "709807f33567df4e9487994b434f8d6505f03acc"
-		},
-		{
-			"ImportPath": "github.com/LaynePeng/cfd/spec",
-			"Rev": "709807f33567df4e9487994b434f8d6505f03acc"
-		},
-		{
-			"ImportPath": "github.com/LaynePeng/cfd/utils",
-			"Rev": "709807f33567df4e9487994b434f8d6505f03acc"
-		},
-		{
 			"ImportPath": "github.com/urfave/cli",
 			"Comment": "v1.18.0",
 			"Rev": "1efa31f08b9333f1bd4882d61f9d668a70cd902e"
