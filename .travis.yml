@@ -7,7 +7,5 @@ go:
  - release
  - tip
 
-install: make get-deps
-
 script:
  - go test -v ./...
