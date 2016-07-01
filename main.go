@@ -12,7 +12,7 @@ import (
 
 func listAllSupports() ([]string, error) {
 	supports := []string{}
-	for _, f := range cfd.HardwareFunctionsSet {
+	for _, f := range sensor.HardwareFunctionsSet {
 		supported, err := testFunctionSupported(f)
 		if err != nil {
 			return nil, err
@@ -25,39 +25,39 @@ func listAllSupports() ([]string, error) {
 }
 
 func showFunctionDetail(name string) (string, error) {
-	var sensor sensor.Sensor
+	var theSensor sensor.Sensor
 	switch name {
 	case "gpu":
-		sensor = sensor.NewGpuSensor()
+		theSensor = sensor.NewGpuSensor()
 	case "nvram":
-		sensor = sensor.NewNVRAMSensor()
+		theSensor = sensor.NewNVRAMSensor()
 	case "qat":
-		sensor = sensor.NewQATSensor()
+		theSensor = sensor.NewQATSensor()
 	case "nic_bandwidth":
-		sensor = sensor.NewNICBandwidthSensor()
+		theSensor = sensor.NewNICBandwidthSensor()
 	default:
 		return "", errors.New("Not a valid function!")
 	}
 
-	return sensor.Detail()
+	return theSensor.Detail()
 }
 
 func testFunctionSupported(name string) (bool, error) {
-	var sensor sensor.Sensor
+	var theSensor sensor.Sensor
 	switch name {
 	case "gpu":
-		sensor = sensor.NewGpuSensor()
+		theSensor = sensor.NewGpuSensor()
 	case "nvram":
-		sensor = sensor.NewNVRAMSensor()
+		theSensor = sensor.NewNVRAMSensor()
 	case "qat":
-		sensor = sensor.NewQATSensor()
+		theSensor = sensor.NewQATSensor()
 	case "nic_bandwidth":
-		sensor = sensor.NewNICBandwidthSensor()
+		theSensor = sensor.NewNICBandwidthSensor()
 	default:
 		return false, errors.New("Not a valid function!")
 	}
 
-	return sensor.IsSupported()
+	return theSensor.IsSupported()
 }
 
 func main() {
