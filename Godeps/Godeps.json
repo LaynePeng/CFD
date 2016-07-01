@@ -6,6 +6,18 @@
 	],
 	"Deps": [
 		{
+			"ImportPath": "github.com/LaynePeng/CFD",
+			"Rev": "d5516121a24474798e7cd79b8caf356744c3978f"
+		},
+		{
+			"ImportPath": "github.com/LaynePeng/CFD/cfd",
+			"Rev": "d5516121a24474798e7cd79b8caf356744c3978f"
+		},
+		{
+			"ImportPath": "github.com/LaynePeng/CFD/cfd/spec",
+			"Rev": "d5516121a24474798e7cd79b8caf356744c3978f"
+		},
+		{
 			"ImportPath": "github.com/urfave/cli",
 			"Comment": "v1.17.0-85-g4205e9c",
 			"Rev": "4205e9c4ee9672a8df5bb4fe486a8aa07e1e4037"
@@ -14,6 +26,10 @@
 			"ImportPath": "github.com/urfave/cli/altsrc",
 			"Comment": "v1.17.0-85-g4205e9c",
 			"Rev": "4205e9c4ee9672a8df5bb4fe486a8aa07e1e4037"
+		},
+		{
+			"ImportPath": "gopkg.in/check.v1",
+			"Rev": "4f90aeace3a26ad7021961c297b22c42160c7b25"
 		},
 		{
 			"ImportPath": "gopkg.in/yaml.v2",
