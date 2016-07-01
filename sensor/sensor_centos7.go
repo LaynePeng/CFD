@@ -1,9 +1,10 @@
-package cfd
+package sensor
 
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/LaynePeng/CFD/cfd/spec"
+	"github.com/LaynePeng/cfd/spec"
+	"github.com/LaynePeng/cfd/utils"
 	"strconv"
 	"strings"
 )
@@ -21,7 +22,7 @@ type NICBandwidthSensorCentOS7 struct {
 }
 
 func (gs *GpuSensorCentOS7) IsSupported() (bool, error) {
-	ret := RunCmd("/usr/sbin/lspci | grep -i nvidia")
+	ret := utils.RunCmd("/usr/sbin/lspci | grep -i nvidia")
 
 	return ret != "", nil
 }
@@ -31,9 +32,9 @@ func (gs *GpuSensorCentOS7) Desc() (string, error) {
 }
 
 func (gs *GpuSensorCentOS7) Detail() (string, error) {
-	ret := RunCmd("/usr/sbin/lspci | grep -i nvidia")
+	ret := utils.RunCmd("/usr/sbin/lspci | grep -i nvidia")
 	regexp_for_parse_gpu := ".*3D controller:\\s*(.*)\\[(.*)\\]"
-	gpuInfosRet := ReturnSubValueOfFoundLineByLine(regexp_for_parse_gpu, ret)
+	gpuInfosRet := utils.ReturnSubValueOfFoundLineByLine(regexp_for_parse_gpu, ret)
 
 	var gpuInfos []*spec.GPU
 	var gpu *spec.GPU
@@ -54,9 +55,9 @@ func (gs *GpuSensorCentOS7) Detail() (string, error) {
 }
 
 func (ns *NVRAMSensorCentOS7) IsSupported() (bool, error) {
-	ret := RunCmd("lsblk")
+	ret := utils.RunCmd("lsblk")
 
-	return ParseAndFoundLineByLine("^nvme.*\\s*\\d*:\\d*\\s*\\d*\\s.*", ret), nil
+	return utils.ParseAndFoundLineByLine("^nvme.*\\s*\\d*:\\d*\\s*\\d*\\s.*", ret), nil
 }
 
 func (ns *NVRAMSensorCentOS7) Desc() (string, error) {
@@ -64,9 +65,9 @@ func (ns *NVRAMSensorCentOS7) Desc() (string, error) {
 }
 
 func (ns *NVRAMSensorCentOS7) Detail() (string, error) {
-	ret := RunCmd("lsblk")
+	ret := utils.RunCmd("lsblk")
 	regexp_for_nvram := "^(nvme\\S*)\\s+(\\d*):(\\d*)\\s+\\d+\\s+(\\d+\\w{1})\\s+\\d+\\s+\\w+(.*)"
-	rvramInfosRet := ReturnSubValueOfFoundLineByLine(regexp_for_nvram, ret)
+	rvramInfosRet := utils.ReturnSubValueOfFoundLineByLine(regexp_for_nvram, ret)
 
 	var nvramInfos []*spec.NVRAM
 	var nvram *spec.NVRAM
@@ -90,9 +91,9 @@ func (ns *NVRAMSensorCentOS7) Detail() (string, error) {
 }
 
 func (qs *QATSensorCentOS7) IsSupported() (bool, error) {
-	ret := RunCmd("service qat_service status")
+	ret := utils.RunCmd("service qat_service status")
 
-	return ParseAndFoundLineByLine(".+, state=up", ret), nil
+	return utils.ParseAndFoundLineByLine(".+, state=up", ret), nil
 }
 
 func (qs *QATSensorCentOS7) Desc() (string, error) {
@@ -100,9 +101,9 @@ func (qs *QATSensorCentOS7) Desc() (string, error) {
 }
 
 func (qs *QATSensorCentOS7) Detail() (string, error) {
-	ret := RunCmd("service qat_service status")
+	ret := utils.RunCmd("service qat_service status")
 	regexp_for_qat := "^(.+) - type=(\\S+), inst_id=0, node_id=(\\d+),  bdf=83:00:0, #accel=6, #engines=(\\d+), state=(\\w+)"
-	qatInfosRet := ReturnSubValueOfFoundLineByLine(regexp_for_qat, ret)
+	qatInfosRet := utils.ReturnSubValueOfFoundLineByLine(regexp_for_qat, ret)
 
 	var qatInfos []*spec.QAT
 	var qat *spec.QAT
@@ -136,18 +137,18 @@ func (gs *NICBandwidthSensorCentOS7) Desc() (string, error) {
 func (gs *NICBandwidthSensorCentOS7) Detail() (string, error) {
 	var speeds []int
 
-	ret := RunCmd("ifconfig")
+	ret := utils.RunCmd("ifconfig")
 	regexp_for_nic := "(en.*|eth\\d+):\\s+flags=\\d.*"
 	regexp_for_speed := "\\s*Speed:\\s+(\\d+).*/s"
 
-	nicInfo := ReturnSubValueOfFoundLineByLine(regexp_for_nic, ret)
+	nicInfo := utils.ReturnSubValueOfFoundLineByLine(regexp_for_nic, ret)
 
 	for _, oneNicInfo := range nicInfo {
 		nic_name := oneNicInfo[1]
 		cmd_for_nic_speed := fmt.Sprintf("%s %s", "ethtool", nic_name)
 
-		ret = RunCmd(cmd_for_nic_speed)
-		speed_values := ReturnSubValueOfFoundLineByLine(regexp_for_speed, ret)
+		ret = utils.RunCmd(cmd_for_nic_speed)
+		speed_values := utils.ReturnSubValueOfFoundLineByLine(regexp_for_speed, ret)
 		if speed_values != nil && len(speed_values) > 0 {
 			nic_speed := speed_values[0][1]
 			i, err := strconv.Atoi(nic_speed)

@@ -1,4 +1,4 @@
-package cfd
+package sensor
 
 import (
 	"bufio"

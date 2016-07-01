@@ -6,7 +6,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/LaynePeng/CFD/cfd"
+	"github.com/LaynePeng/cfd/sensor"
 	"github.com/urfave/cli"
 )
 
@@ -25,16 +25,16 @@ func listAllSupports() ([]string, error) {
 }
 
 func showFunctionDetail(name string) (string, error) {
-	var sensor cfd.Sensor
+	var sensor sensor.Sensor
 	switch name {
 	case "gpu":
-		sensor = cfd.NewGpuSensor()
+		sensor = sensor.NewGpuSensor()
 	case "nvram":
-		sensor = cfd.NewNVRAMSensor()
+		sensor = sensor.NewNVRAMSensor()
 	case "qat":
-		sensor = cfd.NewQATSensor()
+		sensor = sensor.NewQATSensor()
 	case "nic_bandwidth":
-		sensor = cfd.NewNICBandwidthSensor()
+		sensor = sensor.NewNICBandwidthSensor()
 	default:
 		return "", errors.New("Not a valid function!")
 	}
@@ -43,16 +43,16 @@ func showFunctionDetail(name string) (string, error) {
 }
 
 func testFunctionSupported(name string) (bool, error) {
-	var sensor cfd.Sensor
+	var sensor sensor.Sensor
 	switch name {
 	case "gpu":
-		sensor = cfd.NewGpuSensor()
+		sensor = sensor.NewGpuSensor()
 	case "nvram":
-		sensor = cfd.NewNVRAMSensor()
+		sensor = sensor.NewNVRAMSensor()
 	case "qat":
-		sensor = cfd.NewQATSensor()
+		sensor = sensor.NewQATSensor()
 	case "nic_bandwidth":
-		sensor = cfd.NewNICBandwidthSensor()
+		sensor = sensor.NewNICBandwidthSensor()
 	default:
 		return false, errors.New("Not a valid function!")
 	}
