@@ -6,7 +6,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/LaynePeng/cfd/sensor"
+	"github.com/LaynePeng/cfd/pkg/sensor"
 	"github.com/urfave/cli"
 )
 

@@ -3,8 +3,8 @@ package sensor
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/LaynePeng/cfd/spec"
-	"github.com/LaynePeng/cfd/utils"
+	"github.com/LaynePeng/cfd/pkg/spec"
+	"github.com/LaynePeng/cfd/pkg/utils"
 	"strconv"
 	"strings"
 )
