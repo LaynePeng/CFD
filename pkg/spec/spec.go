@@ -37,12 +37,12 @@ func (n *NIC) ToJson() string {
 	return string(b)
 }
 
-func (n *NIC) FromJson(nicJson string) NIC {
+func (n *NIC) FromJson(nicJson string) *NIC {
 	if err := json.Unmarshal([]byte(nicJson), n); err != nil {
 		log.Fatal(fmt.Sprint(err))
 	}
 
-	return *n
+	return n
 }
 
 func (g *GPU) ToJson() string {
@@ -50,12 +50,12 @@ func (g *GPU) ToJson() string {
 	return string(b)
 }
 
-func (g *GPU) FromJson(gpuJson string) GPU {
+func (g *GPU) FromJson(gpuJson string) *GPU {
 	if err := json.Unmarshal([]byte(gpuJson), g); err != nil {
 		log.Fatal(fmt.Sprint(err))
 	}
 
-	return *g
+	return g
 }
 
 func (nm *NVRAM) ToJson() string {
@@ -63,12 +63,12 @@ func (nm *NVRAM) ToJson() string {
 	return string(b)
 }
 
-func (nm *NVRAM) FromJson(nvramJson string) NVRAM {
+func (nm *NVRAM) FromJson(nvramJson string) *NVRAM {
 	if err := json.Unmarshal([]byte(nvramJson), nm); err != nil {
 		log.Fatal(fmt.Sprint(err))
 	}
 
-	return *nm
+	return nm
 }
 
 func (q *QAT) ToJson() string {
@@ -76,10 +76,10 @@ func (q *QAT) ToJson() string {
 	return string(b)
 }
 
-func (q *QAT) FromJson(qatJson string) QAT {
+func (q *QAT) FromJson(qatJson string) *QAT {
 	if err := json.Unmarshal([]byte(qatJson), q); err != nil {
 		log.Fatal(fmt.Sprint(err))
 	}
 
-	return *q
+	return q
 }
