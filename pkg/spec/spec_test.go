@@ -20,7 +20,7 @@ func TestNicJson(t *testing.T) {
 	nic2Json := nic2.ToJson()
 
 	if nicJson != nic2Json {
-		t.Failed()
+		t.Fail()
 	}
 }
 
@@ -40,7 +40,7 @@ func TestGPUJson(t *testing.T) {
 	gpu2Json := gpu2.ToJson()
 
 	if gpuJson != gpu2Json {
-		t.Failed()
+		t.Fail()
 	}
 }
 
@@ -63,7 +63,7 @@ func TestNVRAMJson(t *testing.T) {
 	nvram2Json := nvram2.ToJson()
 
 	if nvramJson != nvram2Json {
-		t.Failed()
+		t.Fail()
 	}
 }
 
@@ -86,6 +86,6 @@ func TestQATJson(t *testing.T) {
 	qat2Json := qat2.ToJson()
 
 	if qatJson != qat2Json {
-		t.Failed()
+		t.Fail()
 	}
 }

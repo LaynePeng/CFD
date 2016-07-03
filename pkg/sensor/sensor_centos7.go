@@ -102,7 +102,7 @@ func (qs *QATSensorCentOS7) Desc() (string, error) {
 
 func (qs *QATSensorCentOS7) Detail() (string, error) {
 	ret := utils.RunCmd("service qat_service status")
-	regexp_for_qat := "^(.+) - type=(\\S+), inst_id=0, node_id=(\\d+),  bdf=83:00:0, #accel=6, #engines=(\\d+), state=(\\w+)"
+	regexp_for_qat := "^(.+) - type=(\\S+), inst_id=0, node_id=(\\d+), bdf=.+, #accel=\\d+, #engines=(\\d+), state=(\\w+)"
 	qatInfosRet := utils.ReturnSubValueOfFoundLineByLine(regexp_for_qat, ret)
 
 	var qatInfos []*spec.QAT
