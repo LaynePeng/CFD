@@ -102,7 +102,7 @@ func (qs *QATSensorCentOS7) Desc() (string, error) {
 
 func (qs *QATSensorCentOS7) Detail() (string, error) {
 	ret := utils.RunCmd("service qat_service status")
-	regexp_for_qat := "^(.+) - type=(\\S+), inst_id=0, node_id=(\\d+), bdf=.+, #accel=\\d+, #engines=(\\d+), state=(\\w+)"
+	regexp_for_qat := "^(.+)\\s+-\\s+type=(\\S+),\\s+inst_id=0,\\s+node_id=(\\d+),\\s+bdf=.+,\\s+#accel=\\d+,\\s+#engines=(\\d+),\\s+state=(\\w+)"
 	qatInfosRet := utils.ReturnSubValueOfFoundLineByLine(regexp_for_qat, ret)
 
 	var qatInfos []*spec.QAT
@@ -138,7 +138,7 @@ func (gs *NICBandwidthSensorCentOS7) Detail() (string, error) {
 	var speeds []int
 
 	ret := utils.RunCmd("ifconfig")
-	regexp_for_nic := "(en.*|eth\\d+):\\s+flags=\\d.*"
+	regexp_for_nic := "^(en.*|eth\\d+):\\s+flags=\\d.*"
 	regexp_for_speed := "\\s*Speed:\\s+(\\d+).*/s"
 
 	nicInfo := utils.ReturnSubValueOfFoundLineByLine(regexp_for_nic, ret)
