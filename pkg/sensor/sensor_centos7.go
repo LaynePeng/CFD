@@ -32,7 +32,7 @@ func (gs *GpuSensorCentOS7) Desc() (string, error) {
 }
 
 func (gs *GpuSensorCentOS7) Detail() (string, error) {
-	ret := utils.RunCmd("nvidia-smi --query-gpu=uuid,gpu_name,memory.free,memory.used,utilization.gpu,driver_version --format=csv,noheader")
+	ret := utils.RunCmd("nvidia-smi --query-gpu=uuid,gpu_name,memory.free,memory.used,utilization.gpu,driver_version --format=csv,noheader,nounits")
 	gpuInfosRet := utils.ParseCSV(ret)
 
 	var gpuInfos []*spec.GPU
