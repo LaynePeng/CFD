@@ -2,6 +2,7 @@ package utils
 
 import (
 	"bytes"
+	"encoding/csv"
 	"fmt"
 	"log"
 	"os/exec"
@@ -28,6 +29,20 @@ func RunCmd(cmdStr string) string {
 	}
 
 	return out.String()
+}
+
+func ParseCSV(cmd_return string) [][]string {
+	var returnValues [][]string = nil
+
+	reader := csv.NewReader(strings.NewReader(cmd_return))
+	returnValues, err := reader.ReadAll()
+
+	if err != nil {
+		return nil
+	}
+
+	return returnValues
+
 }
 
 func ParseAndFoundLineByLine(reg string, cmd_return string) bool {

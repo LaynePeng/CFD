@@ -12,8 +12,12 @@ type NIC struct {
 }
 
 type GPU struct {
-	Type string `json:"type"`
-	Desc string `json:"desc"`
+	UUID          string `json:"uuid"`
+	Name          string `json:"name"`
+	MemFree       string `json:"mem_free"`
+	MemUsed       string `json:"mem_used"`
+	GPUUtil       string `json:"gpu_util"`
+	DriverVersion string `json:"driver_version`
 }
 
 type NVRAM struct {

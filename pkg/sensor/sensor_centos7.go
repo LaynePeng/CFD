@@ -32,17 +32,20 @@ func (gs *GpuSensorCentOS7) Desc() (string, error) {
 }
 
 func (gs *GpuSensorCentOS7) Detail() (string, error) {
-	ret := utils.RunCmd("/usr/sbin/lspci | grep -i nvidia")
-	regexp_for_parse_gpu := ".*3D controller:\\s*(.*)\\[(.*)\\]"
-	gpuInfosRet := utils.ReturnSubValueOfFoundLineByLine(regexp_for_parse_gpu, ret)
+	ret := utils.RunCmd("nvidia-smi --query-gpu=uuid,gpu_name,memory.free,memory.used,utilization.gpu,driver_version --format=csv,noheader")
+	gpuInfosRet := utils.ParseCSV(ret)
 
 	var gpuInfos []*spec.GPU
 	var gpu *spec.GPU
 	for _, oneGpuInfo := range gpuInfosRet {
-		if len(oneGpuInfo) == 3 {
+		if len(oneGpuInfo) == 6 {
 			gpu = &spec.GPU{
-				Type: strings.TrimSpace(oneGpuInfo[2]),
-				Desc: strings.TrimSpace(oneGpuInfo[1]),
+				UUID:          strings.TrimSpace(oneGpuInfo[0]),
+				Name:          strings.TrimSpace(oneGpuInfo[1]),
+				MemFree:       strings.TrimSpace(oneGpuInfo[2]),
+				MemUsed:       strings.TrimSpace(oneGpuInfo[3]),
+				GPUUtil:       strings.TrimSpace(oneGpuInfo[4]),
+				DriverVersion: strings.TrimSpace(oneGpuInfo[5]),
 			}
 
 			gpuInfos = append(gpuInfos, gpu)

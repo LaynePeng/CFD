@@ -1,3 +1,4 @@
 src/*
 !src/cfd
 vendor
+.DS_Store
