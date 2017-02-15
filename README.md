@@ -14,7 +14,7 @@ In each hardware function, it supported to:
 We have to know this project is just begin and provide a extensible design for future implementations. 
 
 # Limitation
-Please note CFD is only work in CentOS, but it provides an easy extensible design for implement other OS
+Please note CFD is only tested in CentOS7 and Ubuntu 14.04, it may have problem when runned in other OS. But it provides an easy extensible design for implement other OS
 
 # Contribution Guide
 Any contribution is welcome and nessary to this project. But before contributing, please note the following terms:
