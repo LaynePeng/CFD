@@ -26,8 +26,7 @@ func TestNicJson(t *testing.T) {
 
 func TestGPUJson(t *testing.T) {
 	gpu := &GPU{
-		Type: "ABC",
-		Desc: "Nvidia GPU",
+		Name: "Nvidia GPU",
 	}
 
 	gpuJson := gpu.ToJson()
