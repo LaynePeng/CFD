@@ -73,23 +73,12 @@ func checkOSVersion() string {
 				return CENTOS_7
 			}
 		}
-	} else if _, err := os.Stat("/etc/issue"); err == nil {
-		f, err := os.Open("/etc/issue")
+	} else if _, err := os.Stat("/etc/debian_version"); err == nil {
+		_, err := os.Open("/etc/debian_version")
 		if err != nil {
 			panic(err)
 		}
-		defer f.Close()
-
-		rd := bufio.NewReader(f)
-		for {
-			line, err := rd.ReadString('\n')
-			if err != nil || io.EOF == err {
-				break
-			}
-			if strings.Contains(line, "Ubuntu") {
-				return UBUNTU
-			}
-		}
+		return UBUNTU
 	} else {
 		log.Println("Your OS is not supported. Use FAKE Driver")
 	}
