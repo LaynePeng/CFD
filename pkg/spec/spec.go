@@ -36,6 +36,14 @@ type QAT struct {
 	State  string `json:"state"`
 }
 
+type FPGA struct {
+	IP       string `json:"ip"`
+	Type     string `json:"type"`
+	ID       uint64 `json:"id"`
+	Platform string `json:"platform"`
+	Device   string `json:"device"`
+}
+
 func (n *NIC) ToJson() string {
 	b, _ := json.Marshal(n)
 	return string(b)

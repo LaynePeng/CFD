@@ -11,7 +11,7 @@ import (
 var (
 	CENTOS_7             = "centos7"
 	UBUNTU               = "ubuntu"
-	HardwareFunctionsSet = []string{"gpu", "nvram", "qat"}
+	HardwareFunctionsSet = []string{"gpu", "nvram", "qat", "fpga"}
 )
 
 type Sensor interface {
@@ -44,6 +44,14 @@ func NewQATSensor() Sensor {
 		return &QATSensorCentOS7{}
 	}
 	return &QATSensorFake{}
+}
+
+func NewFPGASensor() Sensor {
+	switch checkOSVersion() {
+	case CENTOS_7, UBUNTU:
+		return &FPGASensorLinux{}
+	}
+	return &FPGASensorFake{}
 }
 
 func NewNICBandwidthSensor() Sensor {

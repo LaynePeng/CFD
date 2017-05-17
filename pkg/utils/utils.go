@@ -23,7 +23,11 @@ func RunCmd(cmdStr string) string {
 		} else if err.Error() == "exit status 3" {
 			// Not installed the command, mostly not supported the functions
 			return ""
+		} else if err.Error() == "exit status 4" {
+			// Not installed the command, mostly not supported the functions
+			return ""
 		} else {
+			return ""
 			log.Fatal(fmt.Sprint(err) + ": " + stderr.String())
 		}
 	}

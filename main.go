@@ -33,6 +33,8 @@ func showFunctionDetail(name string) (string, error) {
 		theSensor = sensor.NewNVRAMSensor()
 	case "qat":
 		theSensor = sensor.NewQATSensor()
+	case "fpga":
+		theSensor = sensor.NewFPGASensor()
 	case "nic_bandwidth":
 		theSensor = sensor.NewNICBandwidthSensor()
 	default:
@@ -51,6 +53,8 @@ func testFunctionSupported(name string) (bool, error) {
 		theSensor = sensor.NewNVRAMSensor()
 	case "qat":
 		theSensor = sensor.NewQATSensor()
+	case "fpga":
+		theSensor = sensor.NewFPGASensor()
 	case "nic_bandwidth":
 		theSensor = sensor.NewNICBandwidthSensor()
 	default:
