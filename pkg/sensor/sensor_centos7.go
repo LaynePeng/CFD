@@ -3,10 +3,11 @@ package sensor
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/LaynePeng/cfd/pkg/spec"
-	"github.com/LaynePeng/cfd/pkg/utils"
 	"strconv"
 	"strings"
+
+	"github.com/LaynePeng/cfd/pkg/spec"
+	"github.com/LaynePeng/cfd/pkg/utils"
 )
 
 type GpuSensorCentOS7 struct {
@@ -16,6 +17,9 @@ type NVRAMSensorCentOS7 struct {
 }
 
 type QATSensorCentOS7 struct {
+}
+
+type FPGASensorLinux struct {
 }
 
 type NICBandwidthSensorCentOS7 struct {
@@ -125,6 +129,47 @@ func (qs *QATSensorCentOS7) Detail() (string, error) {
 	}
 
 	b, _ := json.Marshal(qatInfos)
+
+	return string(b), nil
+}
+
+func (fs *FPGASensorLinux) IsSupported() (bool, error) {
+	ret := utils.RunCmd("/usr/bin/xbsak list")
+	lines := strings.Split(ret, "\n")
+
+	return len(lines) > 2, nil
+}
+
+func (fs *FPGASensorLinux) Desc() (string, error) {
+	return "", nil
+}
+
+func (fs *FPGASensorLinux) Detail() (string, error) {
+	ret := utils.RunCmd("/usr/bin/xbsak list")
+	lines := strings.Split(ret, "\n")
+
+	var fpgaInfos []*spec.FPGA
+	var fpga *spec.FPGA
+	id := 0
+	for i := 1; i < len(lines); i++ {
+		if len(lines[i]) > 0 {
+			tunples := strings.Split(lines[i], " ")
+			if len(tunples) == 2 {
+				fpga = &spec.FPGA{
+					IP:       strings.TrimSpace("ANY"),
+					Type:     strings.TrimSpace("FPGA"),
+					ID:       uint64(id),
+					Platform: strings.TrimSpace("Xilinx"),
+					Device:   strings.TrimSpace(tunples[1]),
+				}
+				id++
+			}
+
+			fpgaInfos = append(fpgaInfos, fpga)
+		}
+	}
+
+	b, _ := json.Marshal(fpgaInfos)
 
 	return string(b), nil
 }

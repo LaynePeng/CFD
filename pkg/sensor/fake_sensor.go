@@ -13,6 +13,9 @@ type NVRAMSensorFake struct {
 type QATSensorFake struct {
 }
 
+type FPGASensorFake struct {
+}
+
 type NICBandwidthSensorFake struct {
 }
 
@@ -58,6 +61,21 @@ func (qs *QATSensorFake) Desc() (string, error) {
 
 func (qs *QATSensorFake) Detail() (string, error) {
 	log.Println("Using FAKE Driver")
+	return "", nil
+}
+
+func (fs *FPGASensorFake) IsSupported() (bool, error) {
+	log.Println("Using FAKE FPGA Driver")
+	return true, nil
+}
+
+func (fs *FPGASensorFake) Desc() (string, error) {
+	log.Println("Using FAKE FPGA Driver")
+	return "", nil
+}
+
+func (fs *FPGASensorFake) Detail() (string, error) {
+	log.Println("Using FAKE FPGA Driver")
 	return "", nil
 }
 
