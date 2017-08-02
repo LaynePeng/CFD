@@ -18,6 +18,7 @@ type GPU struct {
 	MemUsed       string `json:"mem_used(MiB)"`
 	GPUUtil       string `json:"gpu_util(%)"`
 	DriverVersion string `json:"driver_version`
+	Platform      string `json:"platform`
 }
 
 type NVRAM struct {

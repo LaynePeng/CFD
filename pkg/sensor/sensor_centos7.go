@@ -50,6 +50,7 @@ func (gs *GpuSensorCentOS7) Detail() (string, error) {
 				MemUsed:       strings.TrimSpace(oneGpuInfo[3]),
 				GPUUtil:       strings.TrimSpace(oneGpuInfo[4]),
 				DriverVersion: strings.TrimSpace(oneGpuInfo[5]),
+				Platform:      "Nvidia",
 			}
 
 			gpuInfos = append(gpuInfos, gpu)
